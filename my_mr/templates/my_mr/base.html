@@ -33,8 +33,8 @@
                         <div class="collapse navbar-collapse" id="topNavBar">
                             <ul class="nav navbar-nav">
                                 <li class="{% if nbar == 'home' %}active{% endif %}"><a href="{% url 'my_mr:my_index' %}"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
-                                <li class="{% if nbar == 'myprof' %}active{% endif %}"><a href="{% url 'my_mr:detail' user.id %}"><span class="glyphicon glyphicon-user"></span>&nbsp; My Profile</a></li>
-                                <li class="nav-item dropdown">
+                                <li class="{{ myprof }}"><a href="{% url 'my_mr:detail' user.id %}"><span class="glyphicon glyphicon-user"></span>&nbsp; My Profile</a></li>
+                                <li class="nav-item dropdown {% if appointments_list or vaccinations_list or surgeries_list %}active{% endif %}">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="glyphicon glyphicon-list-alt"></span>&nbsp; My Records
                                     </a>
@@ -44,7 +44,7 @@
                                         <a class="dropdown-item" href="{% url 'my_mr:vaccinations_list' %}">Vaccination History</a>
                                     </div>
                                 </li>
-                                <li class=""><a href="{% url 'my_mr:specialties' %}"><span class="glyphicon glyphicon-search"></span>&nbsp; Search Doctor</a></li>
+                                <li class="{% if specialties %}active{% endif %}"><a href="{% url 'my_mr:specialties' %}"><span class="glyphicon glyphicon-search"></span>&nbsp; Search Doctor</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="{% url 'mr:logout' %}"><span class="glyphicon glyphicon-off"></span>&nbsp; Logout</a></li>

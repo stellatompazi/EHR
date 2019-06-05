@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.views import generic
-from mr.models import Appointments, Vaccination, Surgery, App_icd10, UserProfile, Prices, OpeningHours
+from mr.models import *
 from django.contrib.auth.decorators import login_required
 
 
@@ -15,6 +15,28 @@ def index(request):
 class DetailView(generic.DetailView):
     model = User
     template_name = 'my_mr/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = {"myprof": "active"}
+        return context
+
+class DetailUpdate(generic.UpdateView):
+    model = PatientProfile
+    fields = ['birthday', 'social_security_number', 'sex', 'insurance', 'blood', 'city', 'address', 'phone']
+    template_name = "my_mr/detailsUpdate.html"
+
+    def get_success_url(self):
+        return reverse('my_mr:detail', kwargs={'pk': self.object.id})
+
+
+
+class UserUpdate(generic.UpdateView):
+    model = User
+    fields = ['username', 'email', 'first_name', 'last_name']
+    template_name = "my_mr/userUpdate.html"
+
+    def get_success_url(self):
+        return reverse('my_mr:detail', kwargs={'pk': self.object.id})
 
 
 

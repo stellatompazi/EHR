@@ -9,12 +9,14 @@
         <table class="table">
             <tr>
                 <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
+                <td>{{ user.first_name }}</td>
             </tr>
             <tr>
-                <td>{{ user.first_name }}</td>
+                <th>Last Name</th>
                 <td>{{ user.last_name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
         </table>
@@ -23,14 +25,18 @@
         <table class="table">
             <tr>
                 <th>Specialty</th>
-                <th>City</th>
-                <th>Address</th>
-                <th>Phone Number</th>
+                <td>{{ user.userprofile.get_specialty_display }}</td>
             </tr>
             <tr>
-                <td>{{ user.userprofile.get_specialty_display }}</td>
+                <th>City</th>
                 <td>{{ user.userprofile.city }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
                 <td>{{ user.userprofile.address }}</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
                 <td>{{ user.userprofile.phone }}</td>
             </tr>
         </table>

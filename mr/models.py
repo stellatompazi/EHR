@@ -201,7 +201,7 @@ class OpeningHours(models.Model):
 
     class Meta:
         ordering = ('day', 'from_hour')
-        unique_together = ('day', 'from_hour', 'to_hour')
+        unique_together = ('doctor', 'day', 'from_hour', 'to_hour')
 
     def __unicode__(self):
         return u'%s: %s - %s' % (self.get_day_display(),

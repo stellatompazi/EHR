@@ -41,6 +41,11 @@ def register(request):
             profile.user = user
             profile.save()
             registered = True
+
+            user = authenticate(username=user_form.cleaned_data['username'],
+                                password=user_form.cleaned_data['password']
+                                )
+            login(request, user)
         else:
             print (user_form.errors, profile_form.errors)
     else:
@@ -127,7 +132,7 @@ class DetailUpdate(generic.UpdateView):
 
 class UserUpdate(generic.UpdateView):
     model = User
-    fields = ['username', 'password', 'email', 'first_name', 'last_name']
+    fields = ['username', 'email', 'first_name', 'last_name']
     template_name = "mr/userUpdate.html"
 
     def get_success_url(self):
@@ -152,6 +157,11 @@ def register_patient(request):
             profile.user = user
             profile.save()
             registered = True
+
+            user = authenticate(username=patient_form.cleaned_data['username'],
+                                password=patient_form.cleaned_data['password']
+                                )
+            login(request, user)
         else:
             print (patient_form.errors, patient_profile_form.errors)
     else:
@@ -411,6 +421,21 @@ class surgery_detail(generic.DetailView):
     template = 'mr/surgery_detail.html'
 
 
+class SurgeryDelete(generic.DeleteView):
+     model = Surgery
+     success_url = reverse_lazy('mr:surgeries_list')   
+
+
+class SurgeryUpdate(generic.UpdateView):
+    model = Surgery
+    fields = ['date', 'procedure_description', 'result_description', 'medication', 'side_effects']
+    template_name = "mr/update_surgery.html"
+
+    def get_success_url(self):
+        return reverse('mr:surgery_detail', kwargs={'pk': self.object.id})
+
+
+
 class AppointmentUpdate(generic.UpdateView):
     model = Appointments
     fields = ['date', 'symptoms_description', 'diagnosis', 'examination_description', 'medication', 'medication_side_effects']
@@ -421,9 +446,22 @@ class AppointmentUpdate(generic.UpdateView):
 
 
 class AppointmentDelete(generic.DeleteView):
-    #template_name = 'mr/appointments_confirm_delete.html'
     model = Appointments
     success_url = reverse_lazy('mr:appointments_list')
+
+
+class VaccinationDelete(generic.DeleteView):
+    model = Vaccination
+    success_url = reverse_lazy('mr:vaccinations_list')
+
+
+class VaccinationUpdate(generic.UpdateView):
+    model = Vaccination
+    fields = ['date', 'description', 'side_effects']
+    template_name = "mr/update_vaccination.html"
+
+    def get_success_url(self):
+        return reverse('mr:vaccination_detail', kwargs={'pk': self.object.id})
 
 
 
@@ -462,12 +500,23 @@ def add_price(request):
         })
 
 
+class PriceDelete(generic.DeleteView):
+    model = Prices
+    success_url = reverse_lazy('mr:price_list')
+
+
 class opening_hours(generic.ListView):
     context_object_name = 'opening_hours'
     template_name = 'mr/opening_hours.html'
 
     def get_queryset(self):
         return OpeningHours.objects.filter(doctor__id=self.request.user.userprofile.id)
+
+
+class OpeningHoursDelete(generic.DeleteView):
+    model = OpeningHours
+    success_url = reverse_lazy('mr:opening_hours')
+
 
 
 @csrf_exempt

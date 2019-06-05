@@ -2,6 +2,7 @@
 
 {% block body_block %}
     <h2>Opening Hours</h2>
+    <p style="color:rgb(219, 84, 84)">*click on hours to delete them</p>
     <table class="table">
         {% if object_list %}
             <tr>
@@ -13,9 +14,11 @@
             {% ifchanged item.day %}
                 <tr>
                     <td>{{ item.get_day_display }}</td>
-                    <td>{{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}
+                    <td><a style="cursor: pointer" data-toggle="modal" data-target="#modalConfirmDeleteForm{{ item.id }}">{{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}</a>
+                    {% include 'mr/opening_hours_confirm_delete.html' with id=item.id %}
             {% else %}
-                    <strong>&</strong> {{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}</td>
+                    <strong>&</strong><a style="cursor: pointer" data-toggle="modal" data-target="#modalConfirmDeleteForm{{ item.id }}"> {{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}</a></td>
+                    {% include 'mr/opening_hours_confirm_delete.html' with id=item.id %}
                 </tr>
             {% endifchanged %}
             
@@ -26,4 +29,5 @@
     
     <hr>
     <br><a href="{% url 'mr:add_opening_hours' %}" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Add Opening Hours</a>
+    &nbsp;&nbsp;
 {% endblock %}

@@ -5,6 +5,7 @@
     <table class="table">
         {% if object_list %}
         <tr>
+            <th></th>
             <th>Appointment</th>
             <th>Price <span class="glyphicon glyphicon-eur"></span></th>
             <th>Duration <span class="glyphicon glyphicon-time"></span> (min)</th>
@@ -13,6 +14,8 @@
         {% endif %}
         {% for app in object_list %}
             <tr>
+                <td><a data-toggle="modal" data-target="#modalConfirmDeletePrice{{ app.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                {% include 'mr/price_confirm_delete.html' with id=app.id %}
                 <td>{{ app.name }}</td>
                 <td>{{ app.price }}</td>
                 <td>{{ app.duration }}'</td>

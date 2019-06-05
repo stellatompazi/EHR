@@ -5,35 +5,61 @@
     {% if user.is_authenticated %}
         <h3>My Profile</h3>
         <hr>
-        <h4>Personal Information</h4>
-        <strong>Firts Name:</strong>  {{ user.first_name }}
-        <br>
-        <strong>Last Name:</strong> {{ user.last_name }}
-        <br>
-        <strong>User Id:</strong> {{ user.id }}
-        <br>
-        <strong>Username:</strong> {{ user.username }}
-        <br>
-        <strong>Date of birth:</strong> {{ user.patientprofile.birthday }}
-        <br>
-        <strong>Sex:</strong> {{ user.patientprofile.sex }}
-        <br>
-        <strong>Type of blood:</strong> {{ user.patientprofile.blood }}
-        <br>
-        <strong>Insurance:</strong> {{ user.patientprofile.insurance }}
-        <br>
-        <strong>Social Security Number:</strong> {{ user.patientprofile.social_security_number }}
-        <hr>
-
+        <h4>Login Information&nbsp;&nbsp;<a href="{% url 'my_mr:update_user' user.id %}" class="glyphicon glyphicon-pencil"></a></h4>
+        <table class="table">
+            <tr>
+                <th>First Name</th>
+                <td>{{ user.first_name }}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{ user.last_name }}</td>
+                
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+        </table>
+        <h4>General Information&nbsp;&nbsp;<a href="{% url 'my_mr:update_profile_detail' user.patientprofile.id %}" class="glyphicon glyphicon-pencil"></a></h4>
+        <table class="table">
+            <tr>
+                <th>Date of Birth</th>
+                <td>{{ user.patientprofile.birthday }}</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>{{ user.patientprofile.sex }}</td>
+            </tr>
+            <tr>
+                <th>Blood Type</th>
+                <td>{{ user.patientprofile.blood }}</td>
+            </tr>
+            <tr>
+                <th>Insurance</th>
+                <td>{{ user.patientprofile.insurance }}</td>
+            </tr>
+            <tr>
+                <th>Social Security Number</th>
+                <td>{{ user.patientprofile.social_security_number }}</td>
+            </tr>
+        </table>
         <h4>Contact Information</h4>
-        <strong>Email:</strong> {{ user.email }}
-        <br>
-        <strong>City:</strong> {{ user.patientprofile.city }}
-        <br>
-        <strong>Address:</strong> {{ user.patientprofile.address }}
-        <br>
-        <strong>Phone:</strong> {{ user.patientprofile.phone }}
-        <hr>
-        <a href="#" class="btn btn-info btn-lg">Update</a>
+        <table class="table">
+            <tr>
+                <th>City</th>
+                <td>{{ user.patientprofile.city }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ user.patientprofile.address }}</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td>{{ user.patientprofile.phone }}</td>
+            </tr>
+
+        </table>
+        
     {% endif %}
 {% endblock %}

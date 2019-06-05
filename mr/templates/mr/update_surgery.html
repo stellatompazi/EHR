@@ -1,0 +1,12 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h3>Update Surgery Details</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update">
+    </form>
+
+{% endblock %}

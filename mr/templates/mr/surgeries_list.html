@@ -5,6 +5,7 @@
     <h3>Surgery history</h3>
     <table class="table">
         <tr>
+            <th></th>
             <th>Date</th>
             <th>Doctor Specialty</th>
             <th>Doctor's Name</th>
@@ -12,6 +13,8 @@
         </tr>
         {% for surgery in object_list %}
         <tr>
+            <td><a data-toggle="modal" data-target="#modalConfirmDeleteSurgery{{ surgery.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>           
+            {% include 'mr/surgery_confirm_delete.html' with id=surgery.id %}
             <td><a href="{% url 'mr:surgery_detail' surgery.id %}">{{ surgery.date }}</a></td>
             <td>{{ surgery.doctor.specialty }}</td>
             <td>{{ surgery.doctor.user.get_full_name }}</td>
