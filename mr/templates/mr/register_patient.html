@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'mr/css/style.css' %}">
+    <title>EHR register</title>
+</head>
+<body>
+    <h1>Register in Electronic Health Record</h1>
+    {% if registered %}
+        <strong>Thank you for registering!</strong><br>
+        <a href="{% url 'my_mr:my_index' %}">Go to Homepage</a><br>
+    {% else %}
+        <strong>Register here!</strong><br>
+        <form id="user_form" method="post" action="{% url 'mr:register_patient' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ patient_form.as_p }}
+            {{ patient_profile_form.as_p }}
+            
+            <input type="submit" name="submit" value="Register">
+        </form>
+    {% endif %}
+
+</body>
+</html>

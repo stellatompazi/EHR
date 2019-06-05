@@ -1,0 +1,62 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+<h3>Appointment Details</h3>
+<strong>Date:</strong> {{ appointments.date }}
+<hr>
+
+<h4>Doctor's Info</h4>
+<table class="table">
+    <tr>
+        <th>Full Name</th>
+        <th>Specialty</th>
+        <th>Phone</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td>{{ appointments.doctor.user.get_full_name }}</td>
+        <td>{{ appointments.doctor.get_specialty_display }}</td>
+        <td>{{ appointments.doctor.phone }}</td>
+        <td>{{ appointments.doctor.user.email }}</td>
+    </tr>
+</table>
+<hr>
+
+<h4>Information</h4><br>
+<strong>Symptoms:</strong> {{ appointments.symptoms_description }}
+<hr>
+<strong>Examination Description:</strong> {{ appointments.examination_description }}
+<hr>
+<table class="table">
+    <tr>
+        <th>Diagnosis</th>
+    </tr>
+    <tr>
+        <td>{{ appointments.diagnosis }}</td>
+    </tr>
+</table>
+<hr>
+<table class="table">
+    <tr>
+        <th>Diagnosis ICD10 codes</th>
+    </tr>
+    {% for code in icd10_list %}
+    <tr>
+        <td>{{ code.icd10_code }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<hr>
+<table class="table">
+    <tr>
+        <th>Medication</th>
+        <th>Side Effects</th>
+    </tr>
+    <tr>
+        <td>{{ appointments.medication }}</td>
+        <td>{{ appointments.medication_side_effects }}</td>
+    </tr>
+</table>
+<hr>
+
+{% endblock %}

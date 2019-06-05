@@ -1,0 +1,23 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+{% if user.is_authenticated %}
+    <h3>Surgery history</h3>
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Doctor Specialty</th>
+            <th>Doctor's Name</th>
+        </tr>
+        {% for surgery in object_list %}
+        <tr>
+            <td><a href="{% url 'my_mr:surgery_detail' surgery.id %}">{{ surgery.date }}</a></td>
+            <td>{{ surgery.doctor.specialty }}</td>
+            <td>{{ surgery.doctor.user.get_full_name }}</td>
+        </tr>
+        {% empty %}
+            There are no surgery data.
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

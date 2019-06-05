@@ -1,0 +1,46 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+{% if user.is_authenticated %}
+    <h3>Surgery history</h3>
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Doctor Specialty</th>
+            <th>Doctor's Name</th>
+            <th>Description</th>
+        </tr>
+        {% for surgery in object_list %}
+        <tr>
+            <td><a href="{% url 'mr:surgery_detail' surgery.id %}">{{ surgery.date }}</a></td>
+            <td>{{ surgery.doctor.specialty }}</td>
+            <td>{{ surgery.doctor.user.get_full_name }}</td>
+            <td>{{ surgery.procedure_description }}</td>
+        </tr>
+        {% empty %}
+            There are no surgery data.
+        {% endfor %}
+    </table>
+    {% if is_paginated %}
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+        </ul>
+    {% endif %}
+{% endif %}
+{% endblock %}

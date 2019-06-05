@@ -1,0 +1,28 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h3>Price List</h3>
+    <table class="table">
+        {% if object_list %}
+        <tr>
+            <th>Appointment</th>
+            <th>Price <span class="glyphicon glyphicon-eur"></span></th>
+            <th>Duration <span class="glyphicon glyphicon-time"></span> (min)</th>
+            <th>Description</th>
+        </tr>
+        {% endif %}
+        {% for app in object_list %}
+            <tr>
+                <td>{{ app.name }}</td>
+                <td>{{ app.price }}</td>
+                <td>{{ app.duration }}'</td>
+                <td>{{ app.description }}</td>
+            </tr>
+        {% empty %}
+            There are currently no objects.<hr>
+        {% endfor %}
+    </table>
+    <hr>
+    <br><a href="{% url 'mr:add_price' %}" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Add Item</a>
+
+{% endblock %}

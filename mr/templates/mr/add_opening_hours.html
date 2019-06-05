@@ -1,0 +1,23 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h3>Opening Hours Update</h3>
+    {% if added %}
+        <strong>Opening Hours added successfully!</strong><hr>
+        <a href="{% url 'mr:opening_hours' %}">Go back</a><br>
+    {% else %}
+        <strong>Fill in the Details</strong><hr>
+        <form id="opening_hours_form" method="post" action="{% url 'mr:add_opening_hours' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            Please fill in the fields in H:M format.<br>
+            For example <strong>9:30</strong> or <strong>13:30</strong><hr>
+            {{ opening_hours_form.as_p }}
+            
+            <input type="submit" name="submit" value="Submit">
+        </form>
+        <hr>
+        <a href="{% url 'mr:opening_hours' %}" class="btn btn-info btn-lg">Cancel</a>
+    {% endif %}
+
+
+{% endblock %}

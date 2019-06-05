@@ -1,0 +1,21 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h3>New item in price list</h3>
+    {% if added %}
+        <strong>Item added succesfully!</strong><hr>
+        <a href="{% url 'mr:price_list' %}">Go back</a><br>
+        <br><a href="#" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Add another Item</a>
+    {% else %}
+        <strong>Fill in the Details</strong><br><hr>
+        <form id="price_form" method="post" action="{% url 'mr:add_price' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ price_form.as_p }}
+
+            <input type="submit" name="submit" value="Add Item in price list">
+        </form>
+
+        <br>
+        <a href="{% url 'mr:price_list' %}" class="btn btn-info btn-lg">Cancel</a>
+    {% endif %}
+{% endblock %}

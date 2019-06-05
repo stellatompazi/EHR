@@ -1,0 +1,28 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+<h3>Vaccination Details</h3>
+<strong>Date:</strong> {{ vaccination.date }}
+<hr>
+
+<strong>Doctor's Info</strong>
+<table class="table">
+    <tr>
+        <th>Full Name</th>
+        <th>Specialty</th>
+    </tr>
+    <tr>
+        <td>{{ vaccination.doctor.user.get_full_name }}</td>
+        <td>{{ vaccination.doctor.specialty }}</td>
+    </tr>
+</table>
+<hr>
+
+<h4>Information</h4>
+<hr>
+<strong>Description:</strong> {{ vaccination.description }}
+<br>
+<strong>Side Effects:</strong> {{ vaccination.side_effects }}
+<hr>
+<a href="{% url 'mr:patient_details' vaccination.patient.id %}" class="btn btn-info btn-lg">Go back</a>
+{% endblock %}

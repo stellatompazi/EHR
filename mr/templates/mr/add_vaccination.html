@@ -1,0 +1,18 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h3>New Vaccination Details</h3>
+{% if registered %}
+    <strong>Record saved successfully!</strong><br>
+    <a href="{% url 'mr:patient_details' p_id %}">Go back</a><br>
+{% else %}
+    <strong>Fill in the Vaccination Details</strong><br>
+    <form id="vaccination_form" method="post" action="{% url 'mr:add_vaccination' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ vaccination_form.as_p }}
+        
+        <input type="submit" name="submit" value="Add Vaccination Record">
+    </form>
+    <a href="{% url 'mr:patient_details' p_id %}" class="btn btn-info btn-lg">Cancel</a>
+{% endif %}
+{% endblock %}

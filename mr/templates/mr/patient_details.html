@@ -1,0 +1,68 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+    
+        <ul class="nav nav-tabs">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{% url 'mr:patient_details' patientprofile.id %}" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add New Record
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'mr:add_appointment' %}">Add New Appointment Record</a><br>
+                    <a class="dropdown-item" href="{% url 'mr:add_vaccination' %}">Add New Vaccination Record</a><br>
+                    <a class="dropdown-item" href="{% url 'mr:add_surgery' %}">Add New Surgery Record</a><br>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{% url 'mr:patient_details' patientprofile.id %}" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Find Record
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'mr:appointments_list' %}">Appointments</a><br>
+                    <a class="dropdown-item" href="{% url 'mr:vaccinations_list' %}">Vaccinations</a><br>
+                    <a class="dropdown-item" href="{% url 'mr:surgeries_list' %}">Surgeries</a>
+                </div>
+            </li>
+        </ul>
+       
+
+        
+        <h3 class="text-center">Patient's Profile</h3>
+        <br>
+        <hr>
+        <strong>First Name:</strong> {{ patientprofile.user.first_name }}
+        <br><br>
+        <strong>Last Name:</strong> {{ patientprofile.user.last_name }}
+        <br><br>
+        <strong>Username:</strong> {{ patientprofile.user.username }}
+        <br><br>
+        <strong>Patient Id:</strong> {{ patientprofile.id }}
+        <br><br>
+        <strong>User Id:</strong> {{ patientprofile.user.id }}
+        <br><br>
+        <strong>Email:</strong> {{ patientprofile.user.email }}
+        <br><br>
+        <strong>Date of Birth:</strong> {{ patientprofile.birthday }}
+        <br><br>
+        <strong>Social Security Number:</strong> {{ patientprofile.social_security_number }}
+        <br><br>
+        <strong>Gender:</strong> {{ patientprofile.sex }}
+        <br><br>
+        <strong>Insurance:</strong> {{ patientprofile.insurance }}
+        <br><br>
+        <strong>Blood type:</strong> {{ patientprofile.blood }}
+        <hr>
+
+        <h3>Contact Information</h3>
+        <strong>City:</strong> {{ patientprofile.city }}
+        <br><br>
+        <strong>Address:</strong> {{ patientprofile.address }}
+        <br><br>
+        <strong>Phone Number:</strong> {{ patientprofile.phone }}
+        <hr>
+     
+    {% endif %}
+{% endblock %}

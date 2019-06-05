@@ -1,0 +1,31 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+<h3>Surgery Details</h3>
+<strong>Date:</strong> {{ surgery.date }}
+<hr>
+
+<strong>Doctor's Info</strong>
+<table class="table">
+    <tr>
+        <th>Full Name</th>
+        <th>Specialty</th>
+    </tr>
+    <tr>
+        <td>{{ surgery.doctor.user.get_full_name }}</td>
+        <td>{{ surgery.doctor.specialty }}</td>
+    </tr>
+</table>
+<hr>
+
+<h4>Information</h4>
+<hr>
+<strong>Procedure Description:</strong> {{ surgery.procedure_description }}
+<br>
+<strong>Results:</strong> {{ surgery.result_description }}
+<hr>
+<strong>Medication:</strong> {{ surgery.medication }}
+<br>
+<strong>Side Effects:</strong> {{ surgery.side_effects }}
+<hr>
+{% endblock %}

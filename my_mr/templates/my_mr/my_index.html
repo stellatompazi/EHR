@@ -1,0 +1,9 @@
+{% extends 'my_mr/base.html' %}
+
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h3 class="text-center">Welcome Patient {{ user.first_name }}!</h3>
+        
+    {% endif %}
+{% endblock %}

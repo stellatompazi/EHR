@@ -1,0 +1,58 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h3>General Info</h3><br>
+        <strong>Name:</strong>&nbsp; {{ userprofile.user.get_full_name }}<br><br>
+        <strong>Specialty:</strong>&nbsp; {{ userprofile.specialty }}<br><br>
+        <strong>City:</strong>&nbsp; {{ userprofile.city }}<br><br>
+        <strong>Address:</strong>&nbsp; {{userprofile.address}}<br><br>
+        <strong>Phone Number:</strong>&nbsp; {{ userprofile.phone }}<br><br>
+
+        <h3>Opening Hours</h3>
+        <table class="table">
+            {% if opening_hours_list %}
+                <tr>
+                    <th>Day</th>
+                    <th>Hours</th>
+                </tr>
+            {% endif %}
+            {% for item in opening_hours_list %}
+                {% ifchanged item.day %}
+                    <tr>
+                        <td>{{ item.get_day_display }}</td>
+                        <td>{{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}
+                {% else %}
+                        <strong>&</strong> {{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}</td>
+                    </tr>
+                {% endifchanged %}
+                
+            {% empty %}
+                There are currently no opening hour information.
+            {% endfor %}
+        </table>
+        <hr>
+        <h3>Price Menu</h3>
+        <table class="table">
+            {% if price_list %}
+                <tr>
+                    <th>Appointment</th>
+                    <th>Price <span class="glyphicon glyphicon-eur"></span></th>
+                    <th>Duration <span class="glyphicon glyphicon-time"></span> (min)</th>
+                    <th>Description</th>
+                </tr>
+            {% endif %}
+            {% for app in price_list %}
+                <tr>
+                    <td>{{ app.name }}</td>
+                    <td>{{ app.price }}</td>
+                    <td>{{ app.duration }}'</td>
+                    <td>{{ app.description }}</td>
+                </tr>
+            {% empty %}
+                There are currently no objects.<hr>
+            {% endfor %}
+        </table>
+
+    {% endif %}
+{% endblock %}

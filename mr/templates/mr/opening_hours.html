@@ -1,0 +1,29 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h2>Opening Hours</h2>
+    <table class="table">
+        {% if object_list %}
+            <tr>
+                <th>Day</th>
+                <th>Hours</th>
+            </tr>
+        {% endif %}
+        {% for item in object_list %}
+            {% ifchanged item.day %}
+                <tr>
+                    <td>{{ item.get_day_display }}</td>
+                    <td>{{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}
+            {% else %}
+                    <strong>&</strong> {{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}</td>
+                </tr>
+            {% endifchanged %}
+            
+        {% empty %}
+            There are currently no opening hour information.
+        {% endfor %}
+    </table>
+    
+    <hr>
+    <br><a href="{% url 'mr:add_opening_hours' %}" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Add Opening Hours</a>
+{% endblock %}

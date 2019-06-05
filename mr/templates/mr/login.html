@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EHR login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'mr/css/style.css' %}">
+</head>
+<body>
+    <h1>Login to EHR</h1>
+
+    <form id="login_form" method="post" action="{% url 'mr:login' %}">
+        {% csrf_token %}
+        Username: <input type="text" name="username" value="">
+        <br><br>
+        Password: <input type="password" name="password" value="">
+        <br><br>
+        
+        <input type="submit" value="submit">
+    </form>
+    
+</body>
+</html>

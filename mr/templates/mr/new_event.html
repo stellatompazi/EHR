@@ -1,0 +1,24 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h3>New Event</h3>
+    {% if added %}
+        <strong>Event added successfully!</strong>
+        <a href="{% url 'mr:calendar' %}">Return</a>
+    {% else %}
+        <div class="clearfix">
+            <a class="btn btn-info right" href="{% url 'mr:calendar' %}"> Calendar </a>
+        </div>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            
+            <input type="text" placeholder="Enter social security number" class="form-control" name="q" value="{{ request.GET.q }}">
+            <hr>
+            {{ event_form.as_p }}
+
+            <button type="submit" class="btn btn-info right">Submit</button>
+        </form>
+    {% endif %}
+
+{% endblock %}

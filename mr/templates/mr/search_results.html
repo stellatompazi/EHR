@@ -1,0 +1,10 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <div class="text-center">
+            <h3>Patient with {{ query }} found.</h3><hr>
+            <a href="{% url 'mr:patient_details' p_id %}">{{ search_result }}</a>
+        </div>
+    {% endif %}
+{% endblock %}

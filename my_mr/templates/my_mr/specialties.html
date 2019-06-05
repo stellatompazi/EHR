@@ -1,0 +1,11 @@
+{% extends 'my_mr/base.html' %}
+
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        {% for i,j in specialties %}
+            <p><a href="{% url 'my_mr:doctor_list' slug=i %}">{{ j }}</a></p>
+        {% endfor %}
+
+    {% endif %}
+{% endblock %}

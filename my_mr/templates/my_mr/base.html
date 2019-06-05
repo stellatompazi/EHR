@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EHR</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'mr/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Electronic Health Record Patient</h1>
+    <div>
+        {% if user.is_authenticated %}
+            {% block navigation %}
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <!-- Logo -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="{% url 'my_mr:my_index' %}">EHR</a>
+                        </div>
+                
+                        <div class="collapse navbar-collapse" id="topNavBar">
+                            <ul class="nav navbar-nav">
+                                <li class="{% if nbar == 'home' %}active{% endif %}"><a href="{% url 'my_mr:my_index' %}"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
+                                <li class="{% if nbar == 'myprof' %}active{% endif %}"><a href="{% url 'my_mr:detail' user.id %}"><span class="glyphicon glyphicon-user"></span>&nbsp; My Profile</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="glyphicon glyphicon-list-alt"></span>&nbsp; My Records
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{% url 'my_mr:appointments_list' %}">Appointment History</a>
+                                        <a class="dropdown-item" href="{% url 'my_mr:surgeries_list' %}">Surgery History</a>
+                                        <a class="dropdown-item" href="{% url 'my_mr:vaccinations_list' %}">Vaccination History</a>
+                                    </div>
+                                </li>
+                                <li class=""><a href="{% url 'my_mr:specialties' %}"><span class="glyphicon glyphicon-search"></span>&nbsp; Search Doctor</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{% url 'mr:logout' %}"><span class="glyphicon glyphicon-off"></span>&nbsp; Logout</a></li>
+                            </ul>
+                        </div>
+                
+                    </div>
+                </nav>
+            {% endblock %}
+            {% block body_block %}{% endblock %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+{% if user.is_authenticated %}
+    <h3>Appointment history</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Doctor Specialty</th>
+            <th>Doctor's Name</th>
+            <th>Description</th>
+        </tr>
+        {% for app in object_list %}
+        <tr>
+            <td><a data-toggle="modal" data-target="#modalConfirmForm{{ app.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+            {% include 'mr/appointments_confirm_delete.html' with id=app.id %}
+            <td><a href="{% url 'mr:appointments_detail' app.id %}">{{ app.date }}</a></td>
+            <td>{{ app.doctor.get_specialty_display }}</td>
+            <td>{{ app.doctor.user.get_full_name }}</td>
+            <td>{{ app.symptoms_description }}</td>
+        </tr>
+        {% empty %}
+            There are no appointment data.
+        {% endfor %}
+        
+    </table>
+    {% if is_paginated %}
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+        </ul>
+    {% endif %}
+{% endif %}
+{% endblock %}

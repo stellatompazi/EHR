@@ -1,0 +1,28 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+
+        <table class="table">
+            <tr>
+                <th>Full Name</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Doc ID</th>
+            </tr>
+            {% for doctor in object_list %}
+                <tr>
+                    <td><a href="{% url 'my_mr:doctor_detail' doctor.id %}">{{ doctor.user.get_full_name }}</a></td>
+                    <td>{{ doctor.city }}</td>
+                    <td>{{ doctor.address }}</td>
+                    <td>{{ doctor.phone }}</td>
+                    <td>{{ doctor.id }}</td>
+                </tr>
+            {% empty %}
+                There are no doctors with that specialty.
+            {% endfor %}
+    </table>
+
+    {% endif %}
+{% endblock %}

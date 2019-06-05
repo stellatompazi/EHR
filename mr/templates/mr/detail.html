@@ -1,0 +1,39 @@
+{% extends 'mr/base.html' %}
+
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h3>My Profile</h3>
+        <hr>
+        <h4>Login Information&nbsp;&nbsp;<a href="{% url 'mr:update_user' user.id %}" class="glyphicon glyphicon-pencil"></a></h4>
+        <table class="table">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+            <tr>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        </table>
+        <hr>
+        <h4>General Information&nbsp;&nbsp;<a href="{% url 'mr:update_profile_detail' user.userprofile.id %}" class="glyphicon glyphicon-pencil"></a></h4>
+        <table class="table">
+            <tr>
+                <th>Specialty</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+            </tr>
+            <tr>
+                <td>{{ user.userprofile.get_specialty_display }}</td>
+                <td>{{ user.userprofile.city }}</td>
+                <td>{{ user.userprofile.address }}</td>
+                <td>{{ user.userprofile.phone }}</td>
+            </tr>
+        </table>
+
+    {% endif %}
+{% endblock %}

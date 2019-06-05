@@ -1,0 +1,39 @@
+{% extends 'my_mr/base.html' %}
+
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h3>My Profile</h3>
+        <hr>
+        <h4>Personal Information</h4>
+        <strong>Firts Name:</strong>  {{ user.first_name }}
+        <br>
+        <strong>Last Name:</strong> {{ user.last_name }}
+        <br>
+        <strong>User Id:</strong> {{ user.id }}
+        <br>
+        <strong>Username:</strong> {{ user.username }}
+        <br>
+        <strong>Date of birth:</strong> {{ user.patientprofile.birthday }}
+        <br>
+        <strong>Sex:</strong> {{ user.patientprofile.sex }}
+        <br>
+        <strong>Type of blood:</strong> {{ user.patientprofile.blood }}
+        <br>
+        <strong>Insurance:</strong> {{ user.patientprofile.insurance }}
+        <br>
+        <strong>Social Security Number:</strong> {{ user.patientprofile.social_security_number }}
+        <hr>
+
+        <h4>Contact Information</h4>
+        <strong>Email:</strong> {{ user.email }}
+        <br>
+        <strong>City:</strong> {{ user.patientprofile.city }}
+        <br>
+        <strong>Address:</strong> {{ user.patientprofile.address }}
+        <br>
+        <strong>Phone:</strong> {{ user.patientprofile.phone }}
+        <hr>
+        <a href="#" class="btn btn-info btn-lg">Update</a>
+    {% endif %}
+{% endblock %}

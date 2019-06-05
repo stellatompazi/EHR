@@ -1,0 +1,23 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+{% if user.is_authenticated %}
+    <h3>Vaccination history</h3>
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Doctor Specialty</th>
+            <th>Doctor's Name</th>
+        </tr>
+        {% for vaccine in object_list %}
+        <tr>
+            <td><a href="{% url 'my_mr:vaccination_detail' vaccine.id %}">{{ vaccine.date }}</a></td>
+            <td>{{ vaccine.doctor.specialty }}</td>
+            <td>{{ vaccine.doctor.user.get_full_name }}</td>
+        </tr>
+        {% empty %}
+            There are no vaccination data.
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}
