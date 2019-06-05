@@ -550,6 +550,8 @@ def add_opening_hours(request):
 class CalendarView(generic.ListView):
     model = Event
     template_name = 'mr/calendar.html'
+    #request.session['my_id'] = search_result.id
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -557,12 +559,12 @@ class CalendarView(generic.ListView):
         # use today's date for the calendar
         d = get_date(self.request.GET.get('day', None))
         d = get_date(self.request.GET.get('month', None))
-
+        my_id = self.request.user.userprofile.id
         # Instantiate the calendar class with today's year and date
         cal = Calendar(d.year, d.month)
 
         # Call the formatmonth method which returns the calendar as table
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(my_id, withyear=True)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
