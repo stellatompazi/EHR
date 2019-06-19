@@ -2,8 +2,19 @@
 
 
 {% block body_block %}
-    
     <h3 class="text-center">Welcome {{ user.first_name }}!</h3>
-        
-    
+    <table class="table">
+        {% if todays_events %}
+            <tr>
+                <th>Today's Appointments</th>
+            </tr>
+        {% endif %}
+        {% for event in todays_events %}
+            <tr>
+                <td><a style="cursor: pointer" href="{% url 'mr:edit_event' event.id %}">{{ event.start_time.time}} - {{ event.patient.user.get_full_name }}</a></td>
+            </tr>
+        {% empty %}
+            <p>You have no appointments scheduled for today.</p>
+        {% endfor %}       
+    </table>
 {% endblock %}

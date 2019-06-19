@@ -15,5 +15,11 @@ urlpatterns = [
     path('surgery_detail/<int:pk>/', views.surgery_detail.as_view(), name='surgery_detail'),
     path('specialties/', views.specialties, name='specialties'),
     path('specialties/<slug:slug>/', views.doctor_list.as_view(), name='doctor_list'),
-    path('doctor_detail/<int:pk>', views.doctor_detail.as_view(), name='doctor_detail')
+    path('doctor_detail/<int:pk>/', views.doctor_detail.as_view(), name='doctor_detail'),
+    path('favourites/', views.FavouritesList.as_view(), name='favourites'),
+    path('bookmark/add/', views.bookmark, name='bookmark'),
+    path('bookmark/delete/', views.bookmarkDelete, name='bookmark_delete'),
+    path('messages/inbox/', views.InboxList.as_view(), name='inbox'),
+    path('messages/delete/<int:pk>/', views.MessageDelete.as_view(), name='delete_message'),
+    path('messages/sent/', views.SentList.as_view(), name='sent')
 ]

@@ -1,29 +1,47 @@
 {% extends 'mr/base.html' %}
 
 {% block body_block %}
-<h3>Vaccination Details</h3>
-<strong>Date:</strong> {{ vaccination.date }}
+<h3 align="center"><a href="{% url 'mr:patient_details' vaccination.patient.id %}"><span class="glyphicon glyphicon-arrow-left"></span></a>&nbsp; Vaccination Details &nbsp;<a href="{% url 'mr:update_vaccination' vaccination.id %}"><span class="glyphicon glyphicon-pencil"></span></a></h3>
+<strong>&nbsp; Date:</strong> {{ vaccination.date }}
 <hr>
 
-<strong>Doctor's Info</strong>
-<table class="table">
-    <tr>
-        <th>Full Name</th>
-        <th>Specialty</th>
-    </tr>
-    <tr>
-        <td>{{ vaccination.doctor.user.get_full_name }}</td>
-        <td>{{ vaccination.doctor.get_specialty_display }}</td>
-    </tr>
-</table>
-<hr>
+<h4>Doctor's Information</h4>
+    <table class="table">
+        <tr>
+            <th>Full Name</th>
+            <td><a href="{% url 'mr:doctor_detail' vaccination.doctor.id %}">{{ vaccination.doctor.user.get_full_name }}</a></td>
+        </tr>
+        <tr>
+            <th>Specialty</th>
+            <td>{{ vaccination.doctor.get_specialty_display }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ vaccination.doctor.user.email }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ vaccination.doctor.phone }}</td>
+        </tr>
+    </table>
+    <hr>
+    <h4>Vaccination Information</h4>
+    <table class="table">
+        <tr>
+            <th>Description</th>
+            <td>{{ vaccination.description }}</td>
+        </tr>
+        <tr>
+            <th>Side Effects</th>
+            <td>{{ vaccination.side_effects }}</td>
+        </tr>
+        <tr>
+            <th>*Secret Note</th>
+            <td>{{ vaccination.secret_note }}</td>
+        </tr>
+    </table>
 
-<h4>Information</h4>
-<hr>
-<strong>Description:</strong> {{ vaccination.description }}
-<br>
-<strong>Side Effects:</strong> {{ vaccination.side_effects }}
-<hr>
-<a href="{% url 'mr:patient_details' vaccination.patient.id %}" class="btn btn-info btn-lg">Go back</a>
-<a href="{% url 'mr:update_vaccination' vaccination.id %}" class="btn btn-info btn-lg">Update</a>
+
+
+
 {% endblock %}

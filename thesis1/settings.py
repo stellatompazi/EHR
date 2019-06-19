@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['electronichealthrecord.herokuapp.com']
 INSTALLED_APPS = [
     'mr',
     'my_mr',
+    'userMessages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

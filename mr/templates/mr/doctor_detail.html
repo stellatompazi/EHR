@@ -1,0 +1,79 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+    <h3>Doctor's Information</h3>
+    <hr>
+    <h4>Contact Information</h4>
+    <table class="table">
+        <tr>
+            <th>Full Name</th>
+            <td>{{ userprofile.user.get_full_name }}</td>
+        </tr>
+        <tr>
+            <th>Specialty</th>
+            <td>{{ userprofile.get_specialty_display }}</td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td>{{ userprofile.city }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{userprofile.address}}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ userprofile.user.email }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ userprofile.phone }}</td>
+        </tr>
+    </table>
+    <hr>
+    <h4>Opening Hours</h4>
+        <table class="table">
+            {% if opening_hours_list %}
+                <tr>
+                    <th>Day</th>
+                    <th>Hours</th>
+                </tr>
+            {% endif %}
+            {% for item in opening_hours_list %}
+                {% ifchanged item.day %}
+                    <tr>
+                        <td>{{ item.get_day_display }}</td>
+                        <td>{{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}
+                            {% else %}
+                            <strong>&</strong> {{ item.from_hour|time:"H:i" }} - {{ item.to_hour|time:"H:i" }}</td>
+                    </tr>
+                {% endifchanged %}
+        
+            {% empty %}
+                There are currently no opening hour information.
+            {% endfor %}
+        </table>
+    <hr>
+    <h4>Price Menu</h4>
+        <table class="table">
+            {% if prices_list %}
+                <tr>
+                    <th>Appointment</th>
+                    <th>Price <span class="glyphicon glyphicon-eur"></span></th>
+                    <th>Duration <span class="glyphicon glyphicon-time"></span> (min)</th>
+                    <th>Description</th>
+                </tr>
+            {% endif %}
+            {% for app in prices_list %}
+                <tr>
+                    <td>{{ app.name }}</td>
+                    <td>{{ app.price }}</td>
+                    <td>{{ app.duration }}'</td>
+                    <td>{{ app.description }}</td>
+                </tr>
+            {% empty %}
+                There are currently no objects.<hr>
+            {% endfor %}
+        </table>
+
+{% endblock %}

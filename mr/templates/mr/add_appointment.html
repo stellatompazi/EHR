@@ -8,12 +8,9 @@
 
 {% if complete %}
     <strong>Part 1 completed.</strong>
-    <a href="{% url 'mr:add_icd10_codes'%}">Continue</a><br>
+    <a href="{% url 'mr:add_icd10_codes'%}" class="btn btn-info btn-lg">Continue</a><br>
 {% else %}
     <strong>Fill in the Appointment Details</strong><br>
-    doctor id : {{ user.id }} - {{ user.username }}
-    <br>
-    patient id : {{ p_id }}
     <hr>
     <form id="appointments_form" method="post" action="{% url 'mr:add_appointment' %}" enctype="multipart/form-data">
         {% csrf_token %}

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
+import os
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -119,6 +120,8 @@ class Appointments(models.Model):
     medication = models.CharField(max_length=500, blank=True)
     medication_side_effects = models.CharField(max_length=1000, blank=True)
 
+    secret_note = models.CharField(max_length=1000, blank=True)
+
     def __str__(self):
        return self.patient.user.username + ' - ' + self.doctor.specialty + ' - id: ' + str(self.id)
 
@@ -140,6 +143,7 @@ class Vaccination(models.Model):
     date = models.DateField(null=False, default=date.today)
     description = models.CharField(max_length=500, blank=True)
     side_effects = models.CharField(max_length=1000, blank=True)
+    secret_note = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.patient.user.username + ' - ' + self.doctor.specialty
@@ -154,6 +158,7 @@ class Surgery(models.Model):
     result_description = models.CharField(max_length=5000, blank=True)
     medication = models.CharField(max_length=500, blank=True)
     side_effects = models.CharField(max_length=1000, blank=True)
+    secret_note = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.patient.user.username + ' - ' + self.doctor.specialty
@@ -161,7 +166,14 @@ class Surgery(models.Model):
 
 class App_files(models.Model):
     appointment = models.ForeignKey(Appointments, on_delete=models.CASCADE)
-  
+    upload = models.FileField(upload_to='exam_files/')
+
+    def __str__(self):
+        return self.upload.name
+
+
+class Surgery_files(models.Model):
+    surgery = models.ForeignKey(Surgery, on_delete=models.CASCADE)
     upload = models.FileField(upload_to='exam_files/')
 
     def __str__(self):
@@ -224,3 +236,11 @@ class Event(models.Model):
     def get_html_url(self):
         url = reverse('mr:edit_event', args=(self.id,))
         return f'<a href="{url}"> {self.start_time.time()} - {self.patient.user.get_full_name()} </a>'
+
+
+class Favourites(models.Model):
+    patient = models.ForeignKey(PatientProfile, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return  self.patient.user.username + ' - ' + self.doctor.user.username

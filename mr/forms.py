@@ -27,10 +27,11 @@ class PatientProfileForm(forms.ModelForm):
 class AppointmentsForm(forms.ModelForm):
     class Meta:
         model = Appointments
-        fields = ('patient', 'doctor', 'date', 'symptoms_description', 'diagnosis', 'examination_description', 'medication', 'medication_side_effects')
+        fields = ('patient', 'doctor', 'date', 'symptoms_description', 'diagnosis', 'examination_description', 'medication', 'medication_side_effects', 'secret_note')
         widgets = {
             'patient': forms.HiddenInput(),
-            'doctor': forms.HiddenInput()
+            'doctor': forms.HiddenInput(),
+            'date': forms.DateInput(attrs={'type': 'date'}, format= '%d-%b-%Y')
             }
 
 class App_icd10Form(forms.ModelForm):
@@ -41,16 +42,25 @@ class App_icd10Form(forms.ModelForm):
             'appointment': forms.HiddenInput()
             }
 
-class FileForm(forms.ModelForm):
+class AppFileForm(forms.ModelForm):
     class Meta:
         model = App_files
         fields = ('appointment', 'upload')
+        widgets = {
+            'appointment': forms.HiddenInput()
+        }
+
+
+class SurgeryFileForm(forms.ModelForm):
+    class Meta:
+        model = Surgery_files
+        fields = ('surgery', 'upload')
 
 
 class VaccinationForm(forms.ModelForm):
     class Meta:
         model = Vaccination
-        fields = ('patient', 'doctor', 'date' ,'description', 'side_effects')
+        fields = ('patient', 'doctor', 'date' ,'description', 'side_effects', 'secret_note')
         widgets = {
             'patient': forms.HiddenInput(),
             'doctor': forms.HiddenInput()
@@ -60,7 +70,7 @@ class VaccinationForm(forms.ModelForm):
 class SurgeryForm(forms.ModelForm):
     class Meta:
         model = Surgery
-        fields = ('patient', 'doctor', 'date', 'procedure_description', 'result_description', 'medication', 'side_effects')
+        fields = ('patient', 'doctor', 'date', 'procedure_description', 'result_description', 'medication', 'side_effects', 'secret_note')
         widgets = {
             'patient': forms.HiddenInput(),
             'doctor': forms.HiddenInput()
@@ -93,7 +103,7 @@ class EventForm(forms.ModelForm):
         #fields = '__all__'
         fields = ('doctor', 'description', 'start_time', 'confirmed', 'cost')
         widgets = {
-            'start_time': forms.DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+            'start_time': forms.DateInput(attrs={'type': 'datetime-local'}, format= '%d-%m-%Y T%H:%M'),
             'doctor': forms.HiddenInput(),
             'patient': forms.HiddenInput()
         }

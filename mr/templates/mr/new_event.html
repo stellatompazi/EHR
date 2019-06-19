@@ -2,23 +2,30 @@
 
 {% block body_block %}
     <h3>New Event</h3>
-    {% if added %}
-        <strong>Event added successfully!</strong>
-        <a href="{% url 'mr:calendar' %}">Return</a>
-    {% else %}
-        <div class="clearfix">
-            <a class="btn btn-info right" href="{% url 'mr:calendar' %}"> Calendar </a>
-        </div>
-        <hr>
+    <div class="clearfix">
+        <a class="btn btn-info right" href="{% url 'mr:calendar' %}"> Calendar </a>
+    </div>
+    {% if search %}
         <form method="post">
-            {% csrf_token %}
-            
-            <input type="text" placeholder="Enter social security number" class="form-control" name="q" value="{{ request.GET.q }}">
-            <hr>
-            {{ event_form.as_p }}
-
-            <button type="submit" class="btn btn-info right">Submit</button>
+            <input type="text" placeholder="Search Patient" class="form-control" name="q" value="{{ request.GET.q }}">
+            <button type="submit" name="search" value="search" class="btn btn-info right">Search</button>
         </form>
+    {% else %}
+        {% if added %}
+            <strong>Event added successfully!</strong>
+            <a href="{% url 'mr:calendar' %}">Return</a>
+        {% else %}
+            
+            <form method="post">
+                {% csrf_token %}
+                {% for patient in result_list %}
+                    <p><input type="radio" id="patient_{{ patient.id }}" name="patient" value="{{ patient.id }}">
+                    <label for="patient__{{ patient.id }}">{{ patient.user.get_full_name }}</label></p>
+                {% endfor %}
+            
+                {{ event_form.as_p }}
+                <button type="submit" name="submit" value="submit" class="btn btn-info right">Submit</button>
+            </form>
+        {% endif %}
     {% endif %}
-
 {% endblock %}

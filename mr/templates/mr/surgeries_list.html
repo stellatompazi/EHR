@@ -16,7 +16,7 @@
             <td><a data-toggle="modal" data-target="#modalConfirmDeleteSurgery{{ surgery.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>           
             {% include 'mr/surgery_confirm_delete.html' with id=surgery.id %}
             <td><a href="{% url 'mr:surgery_detail' surgery.id %}">{{ surgery.date }}</a></td>
-            <td>{{ surgery.doctor.specialty }}</td>
+            <td>{{ surgery.doctor.get_specialty_display }}</td>
             <td>{{ surgery.doctor.user.get_full_name }}</td>
             <td>{{ surgery.procedure_description }}</td>
         </tr>

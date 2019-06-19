@@ -2,14 +2,53 @@
 
 {% block body_block %}
     {% if user.is_authenticated %}
-        <h3>General Info</h3><br>
-        <strong>Name:</strong>&nbsp; {{ userprofile.user.get_full_name }}<br><br>
-        <strong>Specialty:</strong>&nbsp; {{ userprofile.specialty }}<br><br>
-        <strong>City:</strong>&nbsp; {{ userprofile.city }}<br><br>
-        <strong>Address:</strong>&nbsp; {{userprofile.address}}<br><br>
-        <strong>Phone Number:</strong>&nbsp; {{ userprofile.phone }}<br><br>
+        <h3>General Info 
+            {% if is_favourite %}
+                <a style="cursor: pointer" data-toggle="modal" data-target="#modalBookmarkDelete{{ userprofile.id }}"><span class="glyphicon glyphicon-star"></span></a>
+                {% include 'my_mr/bookmark_delete.html' with id=userprofile.id %}
+            {% else %}
+                <a style="cursor: pointer" data-toggle="modal" data-target="#modalBookmark{{ userprofile.id }}"><span class="glyphicon glyphicon-star-empty"></span></a>
+                {% include 'my_mr/bookmark_confirm.html' with id=userprofile.id %}
+            {% endif %}
+        </h3>
+        <a data-toggle="modal" data-target="#modalMessageForm" class="btn btn-info btn-lg right">Request Appointment</a>
+        {% include 'userMessages/message_form.html' with receiver_id=userprofile.user.id url=request.path %}
+        <br>
+        
+        {% if messages %}
+            <strong><p>Your request was submitted succesfully!</p></strong>
+        {% endif %}
 
-        <h3>Opening Hours</h3>
+        <hr>
+        <h4>Contact Information</h4>
+            <table class="table">
+                <tr>
+                    <th>Full Name</th>
+                    <td>{{ userprofile.user.get_full_name }}</td>
+                </tr>
+                <tr>
+                    <th>Specialty</th>
+                    <td>{{ userprofile.get_specialty_display }}</td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td>{{ userprofile.city }}</td>
+                </tr>
+                <tr>
+                <th>Address</th>
+                    <td>{{userprofile.address}}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ userprofile.user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>{{ userprofile.phone }}</td>
+                </tr>
+        </table>
+        <hr>
+        <h4>Opening Hours</h4>
         <table class="table">
             {% if opening_hours_list %}
                 <tr>
@@ -32,7 +71,7 @@
             {% endfor %}
         </table>
         <hr>
-        <h3>Price Menu</h3>
+        <h4>Price Menu</h4>
         <table class="table">
             {% if price_list %}
                 <tr>

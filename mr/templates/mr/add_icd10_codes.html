@@ -3,8 +3,8 @@
 
 {% block body_block %}
     {% if complete %}
-        <strong>Record created successfully!</strong>
-        <a href="{% url 'mr:patient_details' p_id %}" class="btn btn-info btn-lg">Go back</a>
+        <strong>Part 2 completed.</strong>
+        <a href="{% url 'mr:add_app_file' %}" class="btn btn-info btn-lg">Continue</a>
     {% else %}
         <strong>Insert ICD 10 codes</strong><br>
         <hr>
@@ -18,8 +18,10 @@
             </div><br>
             <input type="checkbox" id="checkbox" name="checkbox"> Do you need to add another icd10 code for this appointment? 
             <hr>
-            <input type="submit" name="submit_step2" value="Finish">
+            <input type="submit" name="submit_step2" value="Αdd code">
         </form>
+        If you don't need to add an ICD10 code, please
+        <a href="{% url 'mr:add_app_file' %}">Continue Here.</a>
         {% for code in icd_list %}
             <p>{{ code.icd10_code }}</p>
         {% endfor %}

@@ -16,7 +16,7 @@
             <td><a data-toggle="modal" data-target="#modalConfirmDeleteVaccine{{ vaccine.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
             {% include 'mr/vaccination_confirm_delete.html' with id=vaccine.id %}
             <td><a href="{% url 'mr:vaccination_detail' vaccine.id %}">{{ vaccine.date }}</a></td>
-            <td>{{ vaccine.doctor.specialty }}</td>
+            <td>{{ vaccine.doctor.get_specialty_display }}</td>
             <td>{{ vaccine.doctor.user.get_full_name }}</td>
             <td>{{ vaccine.description }}</td>
         </tr>

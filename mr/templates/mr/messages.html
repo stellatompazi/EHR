@@ -1,0 +1,83 @@
+{% extends 'mr/base.html' %}
+
+{% block body_block %}
+<hr>
+<table class="table">
+    {% if type == 'inbox' %}
+        <h3>Received Messages</h3>
+        {% if inbox_list %}
+            <tr>
+                <th></th>
+                <th>Date/Time</th>
+                <th>From</th>
+                <th>Message</th>
+                <th></th>
+                <th></th>
+            </tr>
+        {% endif %}
+        {% for message in inbox_list %}
+            <tr>
+                <td><a data-toggle="modal" data-target="#modalDeleteMessage{{ message.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                {% include 'mr/message_confirm_delete.html' with id=message.id url=request.path %}
+                <td>{% if message.was_read == False %}<strong>{% endif %}{{ message.created_at }}{% if message.was_read == False %}</strong>{% endif %}</td>
+                <td>{% if message.was_read == False %}<strong>{% endif %}{{ message.sender }}{% if message.was_read == False %}</strong>{% endif %}</td>
+                <td>{% if message.was_read == False %}<strong>{% endif %}{{ message.content }}{% if message.was_read == False %}</strong>{% endif %}</td>
+                <td><a data-toggle="modal" data-target="#modalMessageRead"><span class="glyphicon glyphicon-ok"></span></a></td>
+                {% include 'userMessages/mark_as_read.html' with id=message.id url=request.path %}
+                <td><a data-toggle="modal" data-target="#modalMessageFormReply" class="btn btn-info">Reply</a></td>
+                {% include 'userMessages/reply_form.html' with receiver_id=message.sender.patientprofile.user.id url=request.path %}
+            </tr>
+        {% empty %}
+            <p>Your inbox is empty.</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if type == 'sent' %}
+        <h3>Sent Messages</h3>
+        {% if sent_list %}
+            <tr>
+                <th></th>
+                <th>Date/Time</th>
+                <th>To</th>
+                <th>Message</th>
+            </tr>
+        {% endif %}
+        {% for message in sent_list %}
+            <tr>
+                <td><a data-toggle="modal" data-target="#modalDeleteMessage{{ message.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                {% include 'mr/message_confirm_delete.html' with id=message.id url=request.path %}
+                <td>{{ message.created_at }}</td>
+                <td>{{ message.receiver }}</td>
+                <td>{{ message.content }}</td>
+            </tr>
+        {% empty %}
+            <p>You have not sent any messages.</p>
+        {% endfor %}
+
+    {% endif %}
+
+    {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</table>
+<hr>
+
+{% endblock %}

@@ -1,33 +1,56 @@
 {% extends 'mr/base.html' %}
 
 {% block body_block %}
-<h3>Surgery Details</h3>
-<strong>Date:</strong> {{ surgery.date }}
+<h3 align="center"><a href="{% url 'mr:patient_details' surgery.patient.id %}"><span class="glyphicon glyphicon-arrow-left"></span></a>&nbsp; Surgery Details &nbsp;<a href="{% url 'mr:update_surgery' surgery.id %}"><span class="glyphicon glyphicon-pencil"></span></a></h3>
+<strong>&nbsp; Date:</strong> {{ surgery.date }}
 <hr>
 
-<strong>Doctor's Info</strong>
-<table class="table">
-    <tr>
-        <th>Full Name</th>
-        <th>Specialty</th>
-    </tr>
-    <tr>
-        <td>{{ surgery.doctor.user.get_full_name }}</td>
-        <td>{{ surgery.doctor.get_specialty_display }}</td>
-    </tr>
-</table>
-<hr>
+<h4>Doctor's Information</h4>
+    <table class="table">
+        <tr>
+            <th>Full Name</th>
+            <td><a href="{% url 'mr:doctor_detail' surgery.doctor.id %}">{{ surgery.doctor.user.get_full_name }}</a></td>
+        </tr>
+        <tr>
+            <th>Specialty</th>
+            <td>{{ surgery.doctor.get_specialty_display }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ surgery.doctor.user.email }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ surgery.doctor.phone }}</td>
+        </tr>
+    </table>
 
 <h4>Information</h4>
 <hr>
-<strong>Procedure Description:</strong> {{ surgery.procedure_description }}
-<br>
-<strong>Results:</strong> {{ surgery.result_description }}
-<hr>
-<strong>Medication:</strong> {{ surgery.medication }}
-<br>
-<strong>Side Effects:</strong> {{ surgery.side_effects }}
-<hr>
-<a href="{% url 'mr:patient_details' surgery.patient.id %}" class="btn btn-info btn-lg">Go back</a>
-<a href="{% url 'mr:update_surgery' surgery.id %}" class="btn btn-info btn-lg">Update</a>
+
+<h4>Surgery Information</h4>
+<table class="table">
+    <tr>
+        <th>Procedure Description</th>
+        <td>{{ surgery.procedure_description }}</td>
+    </tr>
+    <tr>
+        <th>Results</th>
+        <td>{{ surgery.result_description }}</td>
+    </tr>
+    <tr>
+        <th>Medication</th>
+        <td>{{ surgery.medication }}</td>
+    </tr>
+    <tr>
+        <th>Side Effects</th>
+        <td>{{ surgery.side_effects }}</td>
+    </tr>
+    <tr>
+        <th>* Secret Note</th>
+        <td>{{ surgery.secret_note }}</td>
+    </tr>
+</table>
+
+
 {% endblock %}

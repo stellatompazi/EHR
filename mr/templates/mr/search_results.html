@@ -2,9 +2,27 @@
 
 {% block body_block %}
     {% if user.is_authenticated %}
-        <div class="text-center">
-            <h3>Patient with {{ query }} found.</h3><hr>
-            <a href="{% url 'mr:patient_details' p_id %}">{{ search_result }}</a>
-        </div>
+        {% if result_list %}
+            <h3>Relevant results</h3><hr>
+
+            <table class="table">
+                <tr>
+                    <th>Full name</th>
+                    <th>Social Security Number</th>
+                </tr>
+                {% for patient in result_list %}
+                    <tr>
+                        <td><a style="cursor:pointer" href="{% url 'mr:patient_details' patient.id %}">{{ patient.user.get_full_name }}</a></td>
+                        <td>{{ patient.social_security_number }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+
+        {% else %}
+                <h3>Patient not found.</h3>
+        {% endif %}
+            
+
     {% endif %}
 {% endblock %}

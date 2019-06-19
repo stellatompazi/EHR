@@ -37,11 +37,20 @@
                                 <li class="{% if opening_hours %}active{% endif %}"><a href="{% url 'mr:opening_hours' %}"><span class="glyphicon glyphicon-time"></span>&nbsp; Opening Hours</a></li>
                                 <li class="{% if calendar %}active{% endif %}"><a href="{% url 'mr:calendar' %}"><span class="glyphicon glyphicon-calendar"></span>&nbsp; Schedule</a></li>
                                 <li class="{% if price_list %}active{% endif %}"><a href="{% url 'mr:price_list' %}"><span class="glyphicon glyphicon-eur"></span>&nbsp; Price List</a></li>
+                                <li class="nav-item dropdown {% if inbox_list or sent_list %}active{% endif %}">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="glyphicon glyphicon-envelope"></span>&nbsp; Messages {% if received_messages %}<span class="badge badge-notify">{{ received_messages.count }}</span>{% endif %}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{% url 'mr:inbox' %}">Inbox</a><br>
+                                        <a class="dropdown-item" href="{% url 'mr:sent' %}">Sent</a>
+                                    </div>
+                                </li>
                             </ul>
                             <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'mr:search_results' %}">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <input type="text" placeholder="Social Security Number" class="form-control" name="q" value="{{ request.GET.q }}">
+                                    <input type="text" placeholder="Search first/last name or social security number" class="form-control" name="q" value="{{ request.GET.q }}">
                                 </div>
                                 <button type="submit" class="btn btn-default">Search</button>
                             </form>

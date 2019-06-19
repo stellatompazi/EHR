@@ -1,0 +1,24 @@
+{% extends 'mr/base.html' %}
+{% load static %}
+
+{% block body_block %}
+    <h3>Upload Exam File</h3>
+{% if complete %}
+    <strong>File(s) uploaded successfully!</strong><br>
+    <a href="{% url 'mr:patient_details' p_id %}">Go back</a><br>
+{% else %}
+    <strong>Upload File</strong><br>
+    doctor id : {{ user.id }} - {{ user.username }}
+    <br>
+    patient id : {{ p_id }}
+    <hr>
+    <form id="file_form" method="post" action="{% url 'mr:add_app_file' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ file_form.as_p }}
+        <input type="checkbox" id="checkbox" name="checkbox"> Do you need to add another file for this appointment? 
+        <hr>
+        <input type="submit" name="submit" value="Upload Exam File">
+    </form>
+    If you don't need to upload a file <a href="{% url 'mr:patient_details' p_id %}" class="btn btn-info">Finish</a>
+{% endif %}
+{% endblock %}

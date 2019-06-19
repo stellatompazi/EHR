@@ -1,0 +1,42 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+    <h3>My favourite doctors</h3>
+    <table class="table">
+        {% if favourites %}
+            <tr>
+                <th>Doctor's Name</th>
+                <th>Specialty</th>
+            </tr>
+        {% endif %}
+        {% for fav in favourites %}
+            <tr>
+                <td><a style="cursor:pointer" href="{% url 'my_mr:doctor_detail' fav.doctor.id %}">{{ fav.doctor.user.get_full_name }}</a></td>
+                <td>{{ fav.doctor.get_specialty_display }}</td>
+            </tr>
+        {% empty %}
+            <p>You have not bookmarked your favourite doctors yet.</p>
+        {% endfor %}
+    </table>
+    {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+{% endblock %}

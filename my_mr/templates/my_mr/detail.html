@@ -5,6 +5,7 @@
     {% if user.is_authenticated %}
         <h3>My Profile</h3>
         <hr>
+
         <h4>Login Information&nbsp;&nbsp;<a href="{% url 'my_mr:update_user' user.id %}" class="glyphicon glyphicon-pencil"></a></h4>
         <table class="table">
             <tr>
