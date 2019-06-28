@@ -225,7 +225,7 @@ class FavouritesList(generic.ListView):
 
 
 
-@csrf_exempt
+
 @login_required
 def bookmark(request):
     if request.method == 'POST':
@@ -238,7 +238,6 @@ def bookmark(request):
 
 
 
-@csrf_exempt
 @login_required
 def bookmarkDelete(request):
     if request.method == 'POST':

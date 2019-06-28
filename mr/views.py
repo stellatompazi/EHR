@@ -5,6 +5,7 @@ from .forms import *
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
+from django.template.context_processors import csrf
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import *
@@ -40,8 +41,6 @@ def index(request):
         })
 
 
-
-@csrf_exempt
 def register(request):
     context = RequestContext(request)
 
@@ -70,7 +69,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render_to_response('mr/register.html', {
+    return render(request, 'mr/register.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'registered': registered},
@@ -79,7 +78,6 @@ def register(request):
 
 
 
-@csrf_exempt
 def user_login(request):
     context = RequestContext(request)
     if (request.method == 'POST'):
@@ -115,11 +113,11 @@ def user_login(request):
             return HttpResponse("Invalid login details.")
 
     else:
-        return render_to_response('mr/login.html', {}, context)
+        return render(request, 'mr/login.html', {}, context)
 
 
 
-@csrf_exempt
+
 @login_required
 def user_logout(request):
     logout(request)
@@ -185,14 +183,14 @@ def register_patient(request):
         patient_form = UserForm()
         patient_profile_form = PatientProfileForm()
 
-    return render_to_response('mr/register_patient.html', {
+    return render(request, 'mr/register_patient.html', {
         'patient_form': patient_form,
         'patient_profile_form': patient_profile_form,
         'registered': registered},
         context)
 
 
-@csrf_exempt
+
 @login_required
 def search_results(request):
     query = request.GET.get("q")
@@ -226,7 +224,6 @@ class patient_details(generic.DetailView):
 
 
 
-@csrf_exempt
 @login_required
 def add_appointment(request):
     template_name = 'mr/add_appointment.html'
@@ -347,7 +344,7 @@ def icd10Add(request):
 
 
 
-@csrf_exempt
+
 @login_required
 def add_vaccination(request):
     template_name = 'mr/add_vaccination.html'
@@ -383,7 +380,7 @@ def add_vaccination(request):
 
 
 
-@csrf_exempt
+
 @login_required
 def add_surgery(request):
     template_name = 'mr/add_surgery.html'
@@ -421,7 +418,7 @@ def add_surgery(request):
 
 
 
-@csrf_exempt
+
 @login_required
 def add_app_file(request):
     template_name = 'mr/add_file.html'
@@ -456,7 +453,7 @@ def add_app_file(request):
 
 
 
-@csrf_exempt
+
 @login_required
 def add_surgery_file(request):
     template_name = 'mr/add_file.html'
@@ -660,7 +657,7 @@ class icd10Delete(generic.DeleteView):
 
 
 
-@csrf_exempt
+
 @login_required
 def add_price(request):
     template_name = 'mr/add_price.html'
@@ -713,7 +710,7 @@ class OpeningHoursDelete(generic.DeleteView):
 
 
 
-@csrf_exempt
+
 @login_required
 def add_opening_hours(request):
     template_name = 'mr/add_opening_hours.html'
@@ -789,7 +786,7 @@ def next_month(d):
     return month
 
 
-@csrf_exempt
+
 @login_required
 def new_event(request):
     template_name = 'mr/new_event.html'
@@ -838,28 +835,6 @@ def new_event(request):
     })
     
 
-    
-
-
-
-
-
-#ctrl+K & ctrl+C adds #
-#ctrl+K & ctrl+U removes #
-# def edit_event(request, event_id=None):
-#     instance = Event()
-#     if event_id:
-#         instance = get_object_or_404(Event, pk=event_id)
-
-#         event = Event.objects.get(id=event_id)
-#         form = EventForm(instance=instance)
-#         return render(request, 'mr/event.html', {
-#             'form': form,
-#             'event': event
-#         })
-#     else:
-#         return HttpResponse('Something went wrong.')
-        
 
 class EventUpdate(generic.UpdateView):
     model = Event
