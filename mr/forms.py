@@ -21,7 +21,7 @@ class UserProfileForm(forms.ModelForm):
 class PatientProfileForm(forms.ModelForm):
     class Meta:
         model = PatientProfile
-        fields = ('birthday', 'social_security_number', 'sex', 'insurance', 'blood', 'city', 'address', 'phone')
+        fields = ('birthday', 'social_security_number', 'sex', 'insurance', 'blood', 'city', 'address', 'phone', 'important_notes')
  
 
 class AppointmentsForm(forms.ModelForm):
@@ -63,7 +63,8 @@ class VaccinationForm(forms.ModelForm):
         fields = ('patient', 'doctor', 'date' ,'description', 'side_effects', 'secret_note')
         widgets = {
             'patient': forms.HiddenInput(),
-            'doctor': forms.HiddenInput()
+            'doctor': forms.HiddenInput(),
+            'date': forms.DateInput(attrs={'type': 'date'}, format= '%d-%b-%Y')
             }
 
 
@@ -73,7 +74,8 @@ class SurgeryForm(forms.ModelForm):
         fields = ('patient', 'doctor', 'date', 'procedure_description', 'result_description', 'medication', 'side_effects', 'secret_note')
         widgets = {
             'patient': forms.HiddenInput(),
-            'doctor': forms.HiddenInput()
+            'doctor': forms.HiddenInput(),
+            'date': forms.DateInput(attrs={'type': 'date'}, format= '%d-%b-%Y')
             }
 
 
@@ -101,7 +103,7 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         #fields = '__all__'
-        fields = ('doctor', 'description', 'start_time', 'confirmed', 'cost')
+        fields = ('doctor', 'description', 'start_time', 'cost')
         widgets = {
             'start_time': forms.DateInput(attrs={'type': 'datetime-local'}, format= '%d-%m-%Y T%H:%M'),
             'doctor': forms.HiddenInput(),

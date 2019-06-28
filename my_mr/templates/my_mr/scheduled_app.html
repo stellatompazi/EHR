@@ -1,0 +1,36 @@
+{% extends 'my_mr/base.html' %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h3>Scheduled Appointment</h3>
+        <br><br>
+        <h4>Location & Time</h4>
+        <table class="table">
+            <tr>
+                <th>Doctor / Specialty</th>
+                <td><a style="cursor:pointer" href="{% url 'my_mr:doctor_detail' event.doctor.id %}">{{ event.doctor.user.get_full_name }}</a> / {{ event.doctor.specialty }}</td>
+            </tr>
+            <tr>
+                <th>Address / Phone / Email</th>
+                <td>{{ event.doctor.address }}, {{ event.doctor.city }} / {{ event.doctor.phone }} / {{ event.doctor.user.email }}</td>
+            </tr>
+            <tr>
+                <th>Date / Time</th>
+                <td>{{ event.start_time.date }} / {{ event.start_time.time }}</td>
+            </tr>
+        </table>
+        <hr>
+        <h4>Info</h4>
+        <table class="table">
+            <tr>
+                <th>Description</th>
+                <td>{{ event.description }}</td>
+            </tr>
+            <tr>
+                <th>Cost</th>
+                <td>{{ event.cost }}</td>
+            </tr>
+        </table>
+
+    {% endif %}
+{% endblock %}

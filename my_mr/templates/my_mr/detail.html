@@ -44,6 +44,10 @@
                 <th>Social Security Number</th>
                 <td>{{ user.patientprofile.social_security_number }}</td>
             </tr>
+            <tr>
+                <th style="color: red">Important allergies or drug sesnsitivity:</th>
+                <td>{{ patientprofile.important_notes }}</td>
+            </tr>
         </table>
         <h4>Contact Information</h4>
         <table class="table">
@@ -59,7 +63,6 @@
                 <th>Phone Number</th>
                 <td>{{ user.patientprofile.phone }}</td>
             </tr>
-
         </table>
         
     {% endif %}

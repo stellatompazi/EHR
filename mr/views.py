@@ -863,7 +863,7 @@ def new_event(request):
 
 class EventUpdate(generic.UpdateView):
     model = Event
-    fields = ['description', 'start_time', 'confirmed', 'cost']
+    fields = ['description', 'start_time', 'cost']
     template_name = "mr/event.html"
     
     def get_success_url(self):

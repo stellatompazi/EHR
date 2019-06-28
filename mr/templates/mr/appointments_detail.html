@@ -68,14 +68,9 @@
     <table class="table">
         {% for file in app_files %}
         <tr>
-            <td><a href="{{ file.upload.path }}" download>{{ file.name }}</a></td>
+            <td><a href="{{ file.upload.path }}" download>{{ file }}</a></td>
         </tr>
         {% endfor %}
     </table>
-
-
-
-
-
 
 {% endblock %}

@@ -6,6 +6,8 @@ h1 {
 
 body {
     background-color: whitesmoke;
+    height: 90%;
+    margin-bottom: 10%;
 }
 
 .navbar-brand {

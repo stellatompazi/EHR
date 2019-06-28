@@ -100,6 +100,7 @@ class PatientProfile(models.Model):
     city = models.CharField(max_length=50, blank=True)
     address = models.CharField(max_length=50, blank=True)
     phone = models.CharField(max_length=12, blank=True)
+    important_notes = models.TextField(default='')
 
     def __str__(self):
         return self.user.username

@@ -3,9 +3,29 @@
 
 {% block body_block %}
     {% if user.is_authenticated %}
+    <div align="center">
         {% for i,j in specialties %}
             <p><a href="{% url 'my_mr:doctor_list' slug=i %}">{{ j }}</a></p>
         {% endfor %}
         
+        <div class="pagination">
+            <span class="step_links">
+                {% if specialties.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ specialties.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ specialties.number }} of {{ specialties.paginator.num_pages }}
+                </span>
+
+                {% if specialties.has_next %}
+                    <a href="?page={{ specialties.next_page_number }}">next</a>
+                    <a href="?page={{ specialties.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+
+            </span>
+        </div>
+    </div>
     {% endif %}
 {% endblock %}

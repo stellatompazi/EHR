@@ -9,7 +9,6 @@
                 <th>City</th>
                 <th>Address</th>
                 <th>Phone Number</th>
-                <th>Doc ID</th>
             </tr>
             {% for doctor in object_list %}
                 <tr>
@@ -17,7 +16,6 @@
                     <td>{{ doctor.city }}</td>
                     <td>{{ doctor.address }}</td>
                     <td>{{ doctor.phone }}</td>
-                    <td>{{ doctor.id }}</td>
                 </tr>
             {% empty %}
                 There are no doctors with that specialty.

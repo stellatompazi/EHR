@@ -8,7 +8,8 @@
     {% if search %}
         <form method="post">
             <input type="text" placeholder="Search Patient" class="form-control" name="q" value="{{ request.GET.q }}">
-            <button type="submit" name="search" value="search" class="btn btn-info right">Search</button>
+            <br>
+            <button type="submit" name="search" value="search" class="btn btn-info">Search</button>
         </form>
     {% else %}
         {% if added %}

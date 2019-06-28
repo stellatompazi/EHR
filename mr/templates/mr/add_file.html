@@ -7,12 +7,7 @@
     <strong>File(s) uploaded successfully!</strong><br>
     <a href="{% url 'mr:patient_details' p_id %}">Go back</a><br>
 {% else %}
-    <strong>Upload File</strong><br>
-    doctor id : {{ user.id }} - {{ user.username }}
-    <br>
-    patient id : {{ p_id }}
-    <hr>
-    <form id="file_form" method="post" action="{% url 'mr:add_app_file' %}" enctype="multipart/form-data">
+        <form id="file_form" method="post" action="{% url 'mr:add_app_file' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ file_form.as_p }}
         <input type="checkbox" id="checkbox" name="checkbox"> Do you need to add another file for this appointment? 

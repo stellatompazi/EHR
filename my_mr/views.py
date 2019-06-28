@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from userMessages.models import *
 from django.urls import reverse, reverse_lazy
+from django.core.paginator import Paginator
 
 
 
@@ -38,9 +39,21 @@ class DetailView(generic.DetailView):
 
 
 
+class ScheduledApp(generic.DetailView):
+    model = Event
+    template_name = 'my_mr/scheduled_app.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ScheduledApp, self).get_context_data(**kwargs)
+        context['nbar'] = 'active',
+        context['received_messages'] = Message.objects.filter(receiver=self.request.user, was_read=False)
+        return context
+
+
+
 class DetailUpdate(generic.UpdateView):
     model = PatientProfile
-    fields = ['birthday', 'social_security_number', 'sex', 'insurance', 'blood', 'city', 'address', 'phone']
+    fields = ['birthday', 'social_security_number', 'sex', 'insurance', 'blood', 'city', 'address', 'phone', 'important_notes']
     template_name = "my_mr/detailsUpdate.html"
     
     def get_success_url(self):
@@ -151,8 +164,14 @@ class surgery_detail(generic.DetailView):
 
 def specialties(request):
     received_messages = Message.objects.filter(receiver=request.user, was_read=False)
+
+    specialties_list = UserProfile.specialties_list
+    paginator = Paginator(specialties_list, 20)
+    page = request.GET.get('page')
+    specialties = paginator.get_page(page)
+
     return render(request, 'my_mr/specialties.html', {
-        'specialties': UserProfile.specialties_list,
+        'specialties': specialties,
         'received_messages': received_messages
         })
 
